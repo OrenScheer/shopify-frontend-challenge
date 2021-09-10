@@ -11,12 +11,12 @@ import App from "./App";
 
 const theme: ChakraTheme = extendTheme({
   initialColorMode: "dark",
-  useSystemColorMode: false,
+  useSystemColorMode: true,
 }) as ChakraTheme;
 
 ReactDOM.render(
   <React.StrictMode>
-    <ColorModeScript />
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
