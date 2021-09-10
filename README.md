@@ -1,4 +1,4 @@
-# NextAvailableRead
+# Spacestagram
 A web application to explore [NASA's Astronomy Picture of the Day](https://api.nasa.gov/#apod) library.
 
 Users can find photos by date, and like and unlike photos. The likes persist between page refreshes, using localStorage.
