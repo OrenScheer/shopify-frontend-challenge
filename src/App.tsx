@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  FormEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 
 import {
   Alert,
@@ -42,7 +36,7 @@ const App = (): ReactElement => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const getData = useCallback(() => {
+  const getData = () => {
     setImages(undefined);
     setIsLoaded.off();
     setIsError.off();
@@ -62,9 +56,10 @@ const App = (): ReactElement => {
         setIsError.on();
         setIsLoaded.on();
       });
-  }, [endDate, setIsError, setIsLoaded, startDate]);
+  };
 
-  useEffect(() => getData(), [getData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => getData(), []);
 
   return (
     <Flex
