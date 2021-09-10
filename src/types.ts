@@ -4,4 +4,5 @@ export type NASAImage = {
   title: string;
   url: string;
   hdurl: string;
+  media_type: string;
 };

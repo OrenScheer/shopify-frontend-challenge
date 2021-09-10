@@ -70,7 +70,7 @@ const ImageCard = ({ image }: ImageCardProps): ReactElement => {
             mb={0}
             flexShrink={0}
           >
-            {image.url.toLowerCase().includes("youtube") ? (
+            {image.media_type === "video" ? (
               <Box width={{ base: "100%", lg: "500px" }} height="100%">
                 <iframe
                   title={image.title}
