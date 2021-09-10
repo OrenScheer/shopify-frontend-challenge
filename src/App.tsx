@@ -80,36 +80,56 @@ const App = (): ReactElement => {
           </Flex>
         </Flex>
       </Flex>
-      <Button onClick={getData} mb={4} mt="50px">
-        Load images
-      </Button>
-      <Box width="80%">
-        {isError && (
-          <Alert
-            status="error"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-            width="100%"
-            height="100%"
-          >
-            <AlertIcon boxSize="40px" mr={0} />
-            <AlertTitle mt={4} mb={1} fontSize="2xl">
-              There was an error.
-            </AlertTitle>
-            <AlertDescription fontSize="xl">Please try again.</AlertDescription>
-          </Alert>
-        )}
-        {isLoaded ? (
-          images?.map((image) => <ImageCard image={image} />)
-        ) : (
-          <>
-            <Text>Obtaining images from across the universe...</Text>
-            <Progress mt={4} size="lg" isIndeterminate />
-          </>
-        )}
-      </Box>
+      <Flex
+        width="100%"
+        px={8}
+        justifyContent="space-between"
+        alignItems="flex-start"
+        direction={{ base: "column", md: "row" }}
+        mt="50px"
+      >
+        <Flex
+          direction="column"
+          pos={{ md: "sticky" }}
+          top="100px"
+          width={{ base: "100%", md: "20%" }}
+          mb={4}
+          mr={4}
+        >
+          <Button onClick={getData} my={4}>
+            Load images
+          </Button>
+        </Flex>
+        <Box width={{ base: "100%", md: "80%" }}>
+          {isError && (
+            <Alert
+              status="error"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              width="100%"
+              height="100%"
+            >
+              <AlertIcon boxSize="40px" mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize="2xl">
+                There was an error.
+              </AlertTitle>
+              <AlertDescription fontSize="xl">
+                Please try again.
+              </AlertDescription>
+            </Alert>
+          )}
+          {isLoaded ? (
+            images?.map((image) => <ImageCard image={image} />)
+          ) : (
+            <>
+              <Text>Obtaining images from across the universe...</Text>
+              <Progress mt={4} size="lg" isIndeterminate />
+            </>
+          )}
+        </Box>
+      </Flex>
     </Flex>
   );
 };
