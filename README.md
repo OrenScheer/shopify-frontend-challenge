@@ -7,4 +7,4 @@ App built with TypeScript, React, and Chakra UI.
 
 Deployed using Netlify to [spacestagram.orenscheer.me](https://spacestagram.orenscheer.me).
 
-<img src="images/Mobile-screenshot.png">
+<img src="images/Mobile-screenshot.png" width="40%">
