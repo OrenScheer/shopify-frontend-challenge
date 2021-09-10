@@ -171,7 +171,7 @@ const App = (): ReactElement => {
             images?.map((image) => <ImageCard image={image} key={image.date} />)
           ) : (
             <>
-              <Text>Obtaining images from across the universe...</Text>
+              <Text>Retrieving images from across the universe...</Text>
               <Progress mt={4} size="lg" isIndeterminate />
             </>
           )}
