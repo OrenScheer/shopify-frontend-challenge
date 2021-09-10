@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactElement, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 
 import {
   Alert,
@@ -9,7 +9,10 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormLabel,
   Heading,
+  Link,
   Progress,
   Text,
   useBoolean,
@@ -20,6 +23,9 @@ import { FaUserAstronaut } from "react-icons/all";
 import axios from "axios";
 import ImageCard from "./components/ImageCard";
 import { NASAImage } from "./types";
+import DatePicker from "./components/DatePicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const App = (): ReactElement => {
   const bg = useColorModeValue("white", "gray.800");
@@ -27,17 +33,22 @@ const App = (): ReactElement => {
   const [images, setImages] = useState<NASAImage[]>();
   const [isLoaded, setIsLoaded] = useBoolean(true);
   const [isError, setIsError] = useBoolean(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  useEffect(() => getData(), []);
 
   const getData = () => {
     setImages(undefined);
     setIsLoaded.off();
     setIsError.off();
+    console.log(startDate);
     axios
       .get("https://api.nasa.gov/planetary/apod", {
         params: {
           api_key: process.env.REACT_APP_NASA,
-          start_date: "2021-09-01",
-          end_date: "2021-09-09",
+          start_date: startDate.toLocaleDateString("en-CA"),
+          end_date: endDate.toLocaleDateString("en-CA"),
         },
       })
       .then((res) => {
@@ -96,9 +107,48 @@ const App = (): ReactElement => {
           mb={4}
           mr={4}
         >
-          <Button onClick={getData} my={4}>
+          <FormControl>
+            <FormLabel>Start date</FormLabel>
+            <DatePicker
+              selectedDate={startDate}
+              onChange={(date: Date | FormEvent<HTMLElement>) => {
+                if (date instanceof Date) {
+                  setStartDate(date);
+                  if (date > endDate) {
+                    setEndDate(date);
+                  }
+                }
+              }}
+              maxDate={new Date()}
+              locale="en-CA"
+              dateFormat="yyyy-MM-dd"
+            />
+          </FormControl>
+          <FormControl mt={2} mb={4}>
+            <FormLabel>End date</FormLabel>
+            <DatePicker
+              selectedDate={endDate}
+              onChange={(date: Date | FormEvent<HTMLElement>) => {
+                if (date instanceof Date) {
+                  setEndDate(date);
+                }
+              }}
+              minDate={startDate}
+              maxDate={new Date()}
+              locale="en-CA"
+              dateFormat="yyyy-MM-dd"
+            />
+          </FormControl>
+          <Button onClick={getData} mb={2}>
             Load images
           </Button>
+          <Text fontSize="12px" textAlign="left">
+            All images retrieved from NASA's{" "}
+            <Link href="https://api.nasa.gov/#apod" isExternal>
+              Astronomy Picture of the Day API
+            </Link>
+            .
+          </Text>
         </Flex>
         <Box width={{ base: "100%", md: "80%" }}>
           {isError && (
