@@ -1,5 +1,11 @@
 import * as React from "react";
-import { FormEvent, ReactElement, useEffect, useState } from "react";
+import {
+  FormEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import {
   Alert,
@@ -36,13 +42,10 @@ const App = (): ReactElement => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  useEffect(() => getData(), []);
-
-  const getData = () => {
+  const getData = useCallback(() => {
     setImages(undefined);
     setIsLoaded.off();
     setIsError.off();
-    console.log(startDate);
     axios
       .get("https://api.nasa.gov/planetary/apod", {
         params: {
@@ -56,11 +59,12 @@ const App = (): ReactElement => {
         setIsLoaded.on();
       })
       .catch(() => {
-        console.log(process.env.REACT_APP_NASA);
         setIsError.on();
         setIsLoaded.on();
       });
-  };
+  }, [endDate, setIsError, setIsLoaded, startDate]);
+
+  useEffect(() => getData(), [getData]);
 
   return (
     <Flex
@@ -120,7 +124,6 @@ const App = (): ReactElement => {
                 }
               }}
               maxDate={new Date()}
-              locale="en-CA"
               dateFormat="yyyy-MM-dd"
             />
           </FormControl>
@@ -135,7 +138,6 @@ const App = (): ReactElement => {
               }}
               minDate={startDate}
               maxDate={new Date()}
-              locale="en-CA"
               dateFormat="yyyy-MM-dd"
             />
           </FormControl>
@@ -171,7 +173,7 @@ const App = (): ReactElement => {
             </Alert>
           )}
           {isLoaded ? (
-            images?.map((image) => <ImageCard image={image} />)
+            images?.map((image) => <ImageCard image={image} key={image.date} />)
           ) : (
             <>
               <Text>Obtaining images from across the universe...</Text>
