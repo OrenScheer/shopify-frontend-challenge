@@ -17,9 +17,10 @@ import {
   Text,
   useBoolean,
   useColorModeValue,
+  IconButton,
 } from "@chakra-ui/react";
 import ColorModeSwitcher from "./ColorModeSwitcher";
-import { FaUserAstronaut } from "react-icons/all";
+import { FaGithub, FaUserAstronaut } from "react-icons/all";
 import axios from "axios";
 import ImageCard from "./components/ImageCard";
 import { NASAImage } from "./types";
@@ -80,12 +81,37 @@ const App = (): ReactElement => {
             pt={4}
             pb={4}
             px={8}
-            alignItems="flex-end"
+            alignItems="flex-start"
           >
-            <Heading d="flex" alignItems="center" color={titleColor}>
-              <FaUserAstronaut style={{ marginRight: "10px" }} />
-              Spacestagram
-            </Heading>
+            <Flex direction="column">
+              <Heading d="flex" alignItems="center" color={titleColor}>
+                <FaUserAstronaut style={{ marginRight: "10px" }} />
+                Spacestagram
+              </Heading>
+              <Flex alignItems="center">
+                <Text fontSize="sm" fontWeight={600} color="gray.500">
+                  by{" "}
+                  <Link
+                    href="https://orenscheer.me"
+                    isExternal
+                    color={titleColor}
+                  >
+                    Oren Scheer
+                  </Link>
+                </Text>
+                <Link
+                  href="https://github.com/orenscheer/shopify-frontend-challenge"
+                  isExternal
+                >
+                  <IconButton
+                    aria-label="NextAvailableRead GitHub"
+                    icon={<FaGithub style={{ color: "#718096" }} />}
+                    variant="ghost"
+                    size="sm"
+                  />
+                </Link>
+              </Flex>
+            </Flex>
             <ColorModeSwitcher zIndex="9" />
           </Flex>
         </Flex>
@@ -96,7 +122,7 @@ const App = (): ReactElement => {
         justifyContent="space-between"
         alignItems="flex-start"
         direction={{ base: "column", md: "row" }}
-        mt="50px"
+        mt="64px"
       >
         <Flex
           direction="column"
